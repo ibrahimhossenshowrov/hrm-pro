@@ -1,0 +1,32 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Add Department
+{% endblock %}
+
+{% block content %}
+    <div class="card w-50 mx-auto shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{% if form.instance.pk %}Edit Department{% else %}Add New Department{% endif %}</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+                <div class="mb-3 form-check">
+                    {{ form.is_active }}
+                    <label class="form-check-label">{{ form.is_active.label }}</label>
+                </div>
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'department-list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

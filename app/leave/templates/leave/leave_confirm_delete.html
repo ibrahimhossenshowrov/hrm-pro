@@ -1,0 +1,77 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Delete Leave
+{% endblock %}
+
+{% block content %}
+
+<div class="card w-50 mx-auto shadow border-danger">
+
+    <div class="card-header bg-danger text-white">
+
+        <h4 class="mb-0">
+            Confirm Delete
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <p>
+
+            Are you sure you want to delete this leave request?
+
+        </p>
+
+        <table class="table">
+
+            <tr>
+                <th>Employee</th>
+                <td>
+                    {{ leave.employee.first_name }}
+                    {{ leave.employee.last_name }}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Leave Type</th>
+                <td>{{ leave.leave_type }}</td>
+            </tr>
+
+            <tr>
+                <th>Duration</th>
+                <td>
+                    {{ leave.start_date }}
+                    →
+                    {{ leave.end_date }}
+                </td>
+            </tr>
+
+        </table>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn btn-danger"
+            >
+                Delete
+            </button>
+
+            <a
+                href="{% url 'leave-list' %}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

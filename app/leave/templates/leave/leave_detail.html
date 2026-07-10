@@ -1,0 +1,98 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Leave Details
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        <h4>Leave Details</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <tr>
+                <th>Employee</th>
+                <td>
+                    {{ leave.employee.employee_id }}
+                    -
+                    {{ leave.employee.first_name }}
+                    {{ leave.employee.last_name }}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Leave Type</th>
+                <td>{{ leave.leave_type }}</td>
+            </tr>
+
+            <tr>
+                <th>Start Date</th>
+                <td>{{ leave.start_date }}</td>
+            </tr>
+
+            <tr>
+                <th>End Date</th>
+                <td>{{ leave.end_date }}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>{{ leave.status }}</td>
+            </tr>
+
+            <tr>
+                <th>Reason</th>
+                <td>{{ leave.reason }}</td>
+            </tr>
+
+        </table>
+
+        <div class="d-flex justify-content-between">
+
+            <a
+                href="{% url 'leave-list' %}"
+                class="btn btn-secondary"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </a>
+
+            {% if leave.status == "Pending" %}
+
+            <div>
+
+                <a
+                    href="{% url 'leave-reject' leave.pk %}"
+                    class="btn btn-danger"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                    Reject
+                </a>
+
+                <a
+                    href="{% url 'leave-approve' leave.pk %}"
+                    class="btn btn-success"
+                >
+                    <i class="fa-solid fa-check"></i>
+                    Approve
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+    
+</div>
+
+{% endblock %}

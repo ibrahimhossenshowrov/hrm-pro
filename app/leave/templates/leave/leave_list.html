@@ -1,0 +1,364 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Leaves
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>Leaves</h2>
+
+    <a
+        href="{% url 'leave-create' %}"
+        class="btn btn-primary"
+    >
+        <i class="fa-solid fa-plus"></i>
+        Apply Leave
+    </a>
+
+</div>
+
+<form method="GET" class="row g-3 mb-4">
+
+    <div class="col-md-5">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            class="form-control"
+            placeholder="Search Employee..."
+        >
+
+    </div>
+
+    <div class="col-md-5">
+
+        <select
+            name="status"
+            class="form-select"
+        >
+
+            <option value="">All Status</option>
+
+            <option value="Pending"
+                {% if status == "Pending" %}selected{% endif %}>
+                Pending
+            </option>
+
+            <option value="Approved"
+                {% if status == "Approved" %}selected{% endif %}>
+                Approved
+            </option>
+
+            <option value="Rejected"
+                {% if status == "Rejected" %}selected{% endif %}>
+                Rejected
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="col-md-1">
+
+        <button
+            class="btn btn-primary w-100 r-100"
+        >
+            Search
+        </button>
+
+    </div>
+
+    <div class="col-md-1">
+
+        <a
+            href="{% url 'leave-list' %}"
+            class="btn btn-secondary w-100 r-100"
+        >
+            Reset
+        </a>
+
+    </div>
+
+</form>
+
+<div class="row mb-4">
+
+    <div class="col-md-3">
+
+        <div class="card text-center shadow-sm">
+
+            <div class="card-body">
+
+                <h6>Total</h6>
+
+                <h2 class="text-primary">
+
+                    {{ total_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center shadow-sm">
+
+            <div class="card-body">
+
+                <h6>Pending</h6>
+
+                <h2 class="text-warning">
+
+                    {{ pending_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center shadow-sm">
+
+            <div class="card-body">
+
+                <h6>Approved</h6>
+
+                <h2 class="text-success">
+
+                    {{ approved_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card text-center shadow-sm">
+
+            <div class="card-body">
+
+                <h6>Rejected</h6>
+
+                <h2 class="text-danger">
+
+                    {{ rejected_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped mb-0">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th width="170">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for leave in leaves %}
+
+                <tr>
+
+                    <td>
+
+                        {{ leave.employee.employee_id }} <br>
+
+                        <small>
+
+                            {{ leave.employee.first_name }}
+                            {{ leave.employee.last_name }}
+
+                        </small>
+
+                    </td>
+
+                    <td>{{ leave.leave_type }}</td>
+
+                    <td>{{ leave.start_date }}</td>
+
+                    <td>{{ leave.end_date }}</td>
+
+                    <td>
+
+                        {% if leave.status == "Approved" %}
+
+                            <span class="badge bg-success">
+                                {{ leave.status }}
+                            </span>
+
+                        {% elif leave.status == "Rejected" %}
+
+                            <span class="badge bg-danger">
+                                {{ leave.status }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                {{ leave.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{% url 'leave-detail' leave.id %}"
+                            class="btn btn-sm btn-info"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+
+                        <a
+                            href="{% url 'leave-edit' leave.id %}"
+                            class="btn btn-sm btn-warning"
+                        >
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a
+                            href="{% url 'leave-delete' leave.id %}"
+                            class="btn btn-sm btn-danger"
+                        >
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="text-center py-4">
+
+                        No leave records found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% if leaves.has_other_pages %}
+
+            <nav class="mt-4">
+
+                <ul class="pagination justify-content-center">
+
+                    {% if leaves.has_previous %}
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?page={{ leaves.previous_page_number }}&search={{ search }}&status={{ status }}"
+                        >
+                            Previous
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    {% for page in leaves.paginator.page_range %}
+
+                        {% if page == leaves.number %}
+
+                            <li class="page-item active">
+
+                                <span class="page-link">
+
+                                    {{ page }}
+
+                                </span>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ page }}&search={{ search }}&status={{ status }}"
+                                >
+                                    {{ page }}
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if leaves.has_next %}
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?page={{ leaves.next_page_number }}&search={{ search }}&status={{ status }}"
+                        >
+                            Next
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+            {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

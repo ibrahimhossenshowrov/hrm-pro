@@ -1,0 +1,309 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h2>
+        Welcome Back, {{ request.user.first_name|default:request.user.username }} 👋
+    </h2>
+
+    <p class="text-muted mb-0">
+        Here's what's happening in your organization today.
+    </p>
+
+</div>
+
+
+<div class="row g-4 mt-2">
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="stat-card blue">
+
+            <div>
+
+                <h6>Total Employees</h6>
+
+                <h2>245</h2>
+
+                <small>+12 this month</small>
+
+            </div>
+
+            <i class="fa-solid fa-users stat-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="stat-card green">
+
+            <div>
+
+                <h6>Departments</h6>
+
+                <h2>12</h2>
+
+                <small>2 new departments</small>
+
+            </div>
+
+            <i class="fa-solid fa-building stat-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="stat-card orange">
+
+            <div>
+
+                <h6>On Leave</h6>
+
+                <h2>9</h2>
+
+                <small>Today</small>
+
+            </div>
+
+            <i class="fa-solid fa-calendar-check stat-icon"></i>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="stat-card purple">
+
+            <div>
+
+                <h6>Monthly Payroll</h6>
+
+                <h2>$52K</h2>
+
+                <small>Processed</small>
+
+            </div>
+
+            <i class="fa-solid fa-money-bill-wave stat-icon"></i>
+
+        </div>
+
+    </div>
+
+        <div class="row mt-4">
+
+        <div class="col-lg-8">
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h4>Recent Employees</h4>
+
+                    <button class="btn btn-primary btn-sm">
+
+                        View All
+
+                    </button>
+
+                </div>
+
+                <table class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Position</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+
+                                <div class="employee">
+
+                                    <div class="avatar-sm">
+
+                                        I
+
+                                    </div>
+
+                                    Ibrahim
+
+                                </div>
+
+                            </td>
+
+                            <td>IT</td>
+
+                            <td>Backend Developer</td>
+
+                            <td>
+
+                                <span class="badge bg-success">
+
+                                    Active
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+
+                                <div class="employee">
+
+                                    <div class="avatar-sm">
+
+                                        S
+
+                                    </div>
+
+                                    Sarah
+
+                                </div>
+
+                            </td>
+
+                            <td>HR</td>
+
+                            <td>HR Manager</td>
+
+                            <td>
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Leave
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+
+                                <div class="employee">
+
+                                    <div class="avatar-sm">
+
+                                        R
+
+                                    </div>
+
+                                    Rahim
+
+                                </div>
+
+                            </td>
+
+                            <td>Accounts</td>
+
+                            <td>Accountant</td>
+
+                            <td>
+
+                                <span class="badge bg-success">
+
+                                    Active
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="activity-card">
+
+                <h4 class="mb-4">
+
+                    Recent Activity
+
+                </h4>
+
+                <div class="activity-item">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    <div>
+
+                        <strong>New Employee</strong>
+
+                        <p>Sarah joined HR Department</p>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                    <div>
+
+                        <strong>Leave Request</strong>
+
+                        <p>Rahim requested 2 days leave</p>
+
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <i class="fa-solid fa-money-bill"></i>
+
+                    <div>
+
+                        <strong>Payroll Generated</strong>
+
+                        <p>June payroll completed.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

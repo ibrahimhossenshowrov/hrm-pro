@@ -1,0 +1,91 @@
+<div class="sidebar">
+
+    <div class="logo">
+        <i class="fa-solid fa-users"></i>
+        <span>HRM Pro</span>
+    </div>
+
+    <div class="menu">
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+        >
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a
+            href="{% url 'employee-list' %}"
+            class="{% if request.resolver_match.url_name == 'employee-list' or request.resolver_match.url_name == 'employee-create' %}active{% endif %}"
+        >
+            <i class="fa-solid fa-users"></i>
+            <span>Employees</span>
+        </a>
+
+        <a
+            href="{% url 'department-list' %}"
+            class="{% if request.resolver_match.url_name == 'department-list' or request.resolver_match.url_name == 'department-create' %}active{% endif %}"
+        >
+            <i class="fa-solid fa-building"></i>
+            <span>Departments</span>
+        </a>
+
+        <a
+            href="{% url 'attendance-list' %}"
+            class="nav-link {% if request.resolver_match.url_name == 'attendance-list' %}active{% endif %}"
+        >
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <span>Attendance</span>
+
+        </a>
+
+        <a 
+
+        href="{% url 'leave-list' %}" 
+        class="nav-link {% if request.resolver_match.url_name == 'leave-list' %}active{% endif %}"
+        
+        >
+
+            <i class="fa-solid fa-calendar-xmark"></i>
+
+            <span>Leave</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-money-check-dollar"></i>
+            <span>Payroll</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </a>
+
+    </div>
+
+    <div class="profile-box">
+
+        <div class="avatar">
+            {{ request.user.username|first|upper }}
+        </div>
+
+        <div>
+
+            <strong>{{ request.user.username }}</strong>
+
+            <small>Administrator</small>
+
+        </div>
+
+    </div>
+
+<a href="{% url 'logout' %}">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+</a>
+
+</div>
+<div class="sidebar-placeholder"></div>

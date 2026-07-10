@@ -1,0 +1,249 @@
+{% extends "users/base.html" %}
+
+{% load attendance_extras %}
+
+{% block title %}
+Bulk Attendance
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="mb-0">
+        Bulk Attendance
+    </h2>
+
+    <a
+        href="{% url 'attendance-list' %}"
+        class="btn btn-secondary"
+    >
+        Back
+    </a>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+                        Attendance Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        value="{{ selected_date }}"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        Load Employees
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% if selected_date %}
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <input
+        type="hidden"
+        name="date"
+        value="{{ selected_date }}"
+    >
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Employees
+            </h5>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Employee</th>
+
+                        <th>Status</th>
+
+                        <th>Check In</th>
+
+                        <th>Check Out</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for employee in employees %}
+                        {% with attendance=attendance_map|get_item:employee.id %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ employee.employee_id }}
+
+                            </td>
+
+                            <td>
+
+                                {{ employee.first_name }}
+                                {{ employee.last_name }}
+
+                            </td>
+
+                            <td>
+
+                                <select
+                                    class="form-select"
+                                    name="status_{{ employee.id }}"
+                                >
+
+                                    <option value="Present"
+                                    {% if attendance and attendance.status == "Present" %}
+                                    selected
+                                    {% endif %}
+                                    >
+                                    Present
+                                    </option>
+
+                                    <option value="Late"
+                                    {% if attendance and attendance.status == "Late" %}
+                                    selected
+                                    {% endif %}
+                                    >
+                                    Late
+                                    </option>
+
+                                    <option value="Half Day"
+                                    {% if attendance and attendance.status == "Half Day" %}
+                                    selected
+                                    {% endif %}
+                                    >
+                                    Half Day
+                                    </option>
+
+                                    <option value="Absent"
+                                    {% if attendance and attendance.status == "Absent" %}
+                                    selected
+                                    {% endif %}
+                                    >
+                                    Absent
+                                    </option>
+
+                                    <option value="Leave"
+                                    {% if attendance and attendance.status == "Leave" %}
+                                    selected
+                                    {% endif %}
+                                    >
+                                    Leave
+                                    </option>
+
+                                </select>
+
+                            </td>
+
+                            <td>
+
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    name="check_in_{{ employee.id }}"
+                                    value="{% if attendance.check_in %}{{ attendance.check_in|time:'H:i' }}{% endif %}"
+                                >
+
+                            </td>
+
+                            <td>
+
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    name="check_out_{{ employee.id }}"
+                                    value="{% if attendance.check_out %}{{ attendance.check_out|time:'H:i' }}{% endif %}"
+                                >
+
+                            </td>
+
+                        </tr>
+
+                        {% endwith %}
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center">
+
+                            No Active Employees.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer text-end">
+
+            <button
+                type="submit"
+                class="btn btn-success"
+            >
+
+                Save All Attendance
+
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+{% endif %}
+
+{% endblock %}
